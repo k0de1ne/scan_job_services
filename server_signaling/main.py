@@ -7,7 +7,7 @@ app = FastAPI()
 # rooms[room_id] = [websocket1, websocket2]
 rooms: Dict[str, List[WebSocket]] = {}
 
-@app.websocket("/ws/{room_id}")
+@app.websocket("/sync/ws/{room_id}")
 async def websocket_endpoint(websocket: WebSocket, room_id: str):
     await websocket.accept()
     
