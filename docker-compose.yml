@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  llm_api:
+    build: ./server_llm_api
+    container_name: scan_job_llm_api
+    restart: always
+    env_file:
+      - ./server_llm_api/.env
+    volumes:
+      - llm_data:/app/data
+    environment:
+      - DB_NAME=/app/data/proxy.db
+
+  auth_hh:
+    build: ./server_auth_hh
+    container_name: scan_job_auth_hh
+    restart: always
+    env_file:
+      - ./server_auth_hh/.env
+
+  caddy:
+    image: caddy:latest
+    container_name: scan_job_proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  llm_data:
+  caddy_data:
+  caddy_config:
