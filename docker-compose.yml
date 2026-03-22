@@ -19,6 +19,11 @@ services:
     env_file:
       - ./server_auth_hh/.env
 
+  signaling:
+    build: ./server_signaling
+    container_name: scan_job_signaling
+    restart: always
+
   caddy:
     image: caddy:latest
     container_name: scan_job_proxy

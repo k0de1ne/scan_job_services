@@ -19,6 +19,12 @@
         reverse_proxy auth_hh:8001
     }
 
+    # Reverse proxy for WebRTC Signaling
+    handle /sync/* {
+        uri strip_prefix /sync
+        reverse_proxy signaling:8001
+    }
+
     # Optional: Error handling or default response
     handle {
         respond "Scan Job API Gateway" 200
