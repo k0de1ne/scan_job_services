@@ -3,10 +3,7 @@
     # email your@email.com
 }
 
-# Replace with your actual domain name (e.g., api.scanjob.ru)
-# If you only have an IP (e.g. 1.2.3.4), you can use: 1.2.3.4.sslip.io
-# Caddy will automatically get a Let's Encrypt certificate for it.
-:443 {
+144.31.188.34.sslip.io {
     # Reverse proxy for LLM API
     handle /llm/* {
         uri strip_prefix /llm
@@ -20,12 +17,11 @@
     }
 
     # Reverse proxy for WebRTC Signaling
-    reverse_proxy /sync/* signaling:8002 {
-        header_up Connection {>Connection}
-        header_up Upgrade {>Upgrade}
+    handle /sync/* {
+        reverse_proxy signaling:8002
     }
 
-    # Optional: Error handling or default response
+    # Default response
     handle {
         respond "Scan Job API Gateway" 200
     }
